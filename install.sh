@@ -134,7 +134,7 @@ echo "${yellow}Installing PHP.${txtreset}"
 sudo apt update
 sudo add-apt-repository ppa:ondrej/php
 sudo apt update
-sudo apt install php7.4 php7.4-curl php7.4-redis php7.4-xml php7.4-fpm php7.4-igbinary php7.4-json php7.4-dev
+sudo apt install php7.4 php7.4-curl php7.4-redis php7.4-xml php7.4-fpm php7.4-igbinary php7.4-json php7.4-dev php-pear
 sudo systemctl enable --now php-fpm
 echo "${boldgreen}PHP installed and running.${txtreset}"
 
