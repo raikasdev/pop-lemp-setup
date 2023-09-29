@@ -142,7 +142,10 @@ echo "${yellow}Installing MariaDB.${txtreset}"
 sudo apt install mariadb-server
 sudo systemctl enable --now mysql
 echo "${yellow}Configuring MariaDB (mysql_secure_installation). Please answer yes to all except denying all outside connections. Set a root password and remember it.${txtreset}"
-mysql_secure_installation
+if [[ "$DONT_SECURE_INSTALL_MYSQL" != "yes" ]]; then
+  # CI
+  mysql_secure_installation
+fi
 echo "${boldgreen}MariaDB installed and running.${txtreset}"
 
 echo "${yellow}Installing MailHog.${txtreset}"
