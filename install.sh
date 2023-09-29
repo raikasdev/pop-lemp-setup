@@ -152,6 +152,13 @@ echo "${yellow}Installing MailHog.${txtreset}"
 sudo apt-get -y install golang-go
 go install github.com/mailhog/MailHog@latest
 echo "${boldgreen}MailHog installed (run mailhog to start mail server).${txtreset}"
+
+echo "${yellow}Installing mkcert.${txtreset}"
+curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+chmod +x mkcert-v*-linux-amd64
+sudo mv mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+echo "${boldgreen}mkcert installed.${txtreset}"
+
 echo "${yellow}Restarting services....${txtreset}"
 # These need to be running as root, because of the port 80 and other privileges.
 sudo systemctl restart nginx
