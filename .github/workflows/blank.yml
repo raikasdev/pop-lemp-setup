@@ -19,7 +19,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -27,6 +27,6 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run install script
-        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/raikasdev/pop-lemp-setup/master/install.sh)"
+        run: DONT_SECURE_INSTALL_MYSQL=yes /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/raikasdev/pop-lemp-setup/master/install.sh)"
       - name: Curl
         run: curl http://localhost:80
