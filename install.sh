@@ -88,7 +88,9 @@ sudo echo "location ~ \.php\$ {
 
   # fastcgi params
   fastcgi_param DOCUMENT_ROOT   \$realpath_root;
-  fastcgi_param SCRIPT_FILENAME \$realpath_root$fastcgi_script_name;
+  fastcgi_param SCRIPT_FILENAME \$realpath_root\$fastcgi_script_name;
+  fastcgi_param PHP_ADMIN_VALUE \"open_basedir=\$document_root/:/usr/lib/php/:/tmp/\";
+
   fastcgi_pass unix:/var/run/php/php-fpm.sock;
 }" | sudo tee -a "/etc/nginx/php7.conf"
 sudo echo "# WordPress single site rules.
@@ -126,6 +128,78 @@ sudo echo "server {
         include php7.conf;
         include global/wordpress.conf;
 }" | sudo tee -a "/etc/nginx/sites-available/default"
+sudo echo "types {
+  text/html                             html htm shtml;
+  text/css                              css;
+  text/xml                              xml rss;
+  image/gif                             gif;
+  image/jpeg                            jpeg jpg;
+  application/x-javascript              js;
+  text/plain                            txt;
+  text/x-component                      htc;
+  text/mathml                           mml;
+  image/png                             png;
+  image/x-icon                          ico;
+  image/x-jng                           jng;
+  image/vnd.wap.wbmp                    wbmp;
+  application/java-archive              jar war ear;
+  application/mac-binhex40              hqx;
+  application/pdf                       pdf;
+  application/x-cocoa                   cco;
+  application/x-java-archive-diff       jardiff;
+  application/x-java-jnlp-file          jnlp;
+  application/x-makeself                run;
+  application/x-perl                    pl pm;
+  application/x-pilot                   prc pdb;
+  application/x-rar-compressed          rar;
+  application/x-redhat-package-manager  rpm;
+  application/x-sea                     sea;
+  application/x-shockwave-flash         swf;
+  application/x-stuffit                 sit;
+  application/x-tcl                     tcl tk;
+  application/x-x509-ca-cert            der pem crt;
+  application/x-xpinstall               xpi;
+  application/zip                       zip;
+  application/octet-stream              deb;
+  application/octet-stream              bin exe dll;
+  application/octet-stream              dmg;
+  application/octet-stream              eot;
+  application/octet-stream              iso img;
+  application/octet-stream              msi msp msm;
+  audio/mpeg                            mp3;
+  audio/x-realaudio                     ra;
+  video/mpeg                            mpeg mpg;
+  video/quicktime                       mov;
+  video/x-flv                           flv;
+  video/x-msvideo                       avi;
+  video/x-ms-wmv                        wmv;
+  video/x-ms-asf                        asx asf;
+  video/x-mng                           mng;
+}" | sudo tee -a "/etc/nginx/mime.types"
+sudo echo "fastcgi_param  QUERY_STRING       \$query_string;
+fastcgi_param  REQUEST_METHOD     \$request_method;
+fastcgi_param  CONTENT_TYPE       \$content_type;
+fastcgi_param  CONTENT_LENGTH     \$content_length;
+
+fastcgi_param  SCRIPT_NAME        \$fastcgi_script_name;
+fastcgi_param  REQUEST_URI        \$request_uri;
+fastcgi_param  DOCUMENT_URI       \$document_uri;
+fastcgi_param  DOCUMENT_ROOT      \$document_root;
+fastcgi_param  SERVER_PROTOCOL    \$server_protocol;
+fastcgi_param  REQUEST_SCHEME     \$scheme;
+fastcgi_param  HTTPS              \$https if_not_empty;
+
+fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
+fastcgi_param  SERVER_SOFTWARE    nginx/\$nginx_version;
+
+fastcgi_param  REMOTE_ADDR        \$remote_addr;
+fastcgi_param  REMOTE_PORT        \$remote_port;
+fastcgi_param  SERVER_ADDR        \$server_addr;
+fastcgi_param  SERVER_PORT        \$server_port;
+fastcgi_param  SERVER_NAME        \$server_name;
+
+# PHP only, required if PHP was built with --enable-force-cgi-redirect
+fastcgi_param  REDIRECT_STATUS    200;" | sudo tee -a "/etc/nginx/fastcgi_params"
 sudo ln -sfnv /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo chown -R $(whoami):www-data /var/www
 
