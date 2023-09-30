@@ -122,7 +122,7 @@ location ~* ^.+\.(ogg|ogv|svg|svgz|eot|otf|woff|mp4|ttf|rss|atom|jpg|jpeg|gif|pn
 }" | sudo tee "/etc/nginx/global/wordpress.conf"
 sudo echo "server {
         listen 80 default_server;
-        root /var/www;
+        root /var/www/html;
         index index.html index.htm index.php;
         server_name localhost;
         include php7.conf;
@@ -201,6 +201,8 @@ fastcgi_param  SERVER_NAME        \$server_name;
 # PHP only, required if PHP was built with --enable-force-cgi-redirect
 fastcgi_param  REDIRECT_STATUS    200;" | sudo tee "/etc/nginx/fastcgi_params"
 sudo ln -sfnv /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo mkdir -p /var/www/html
+sudo echo "<!DOCTYPE html><html><head><title>Hello world</title></head><body>Hello world!</body></html>" | sudo tee "/var/www/html/index.html"
 sudo chown -R $(whoami):www-data /var/www
 sudo chmod -R 777 /var/www
 echo "${yellow}Installing PHP.${txtreset}"
