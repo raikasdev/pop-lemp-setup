@@ -51,7 +51,7 @@ jobs:
           sudo ln -s "$(realpath ./air-light/bin/newtheme-popos.sh)" /usr/local/bin/newtheme
           sudo chmod +x /usr/local/bin/newtheme
       - name: Create theme using air-light
-        run: echo -e "y\nairdev\nairdev" | newtheme
+        run: echo -e "y\nairdev\nairdev\ny" | newtheme
       - name: Curl project
         run: curl -f https://airdev.test
       - name: Curl project theme style.css
