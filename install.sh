@@ -238,4 +238,6 @@ sudo systemctl restart nginx
 sudo systemctl restart php7.4-fpm
 sudo systemctl restart mysql
 
+sudo nginx -t
+
 echo "${boldgreen}You should now be able to use http://localhost. If not, test with commands sudo nginx -t and sudo php-fpm -t and fix errors. Add new vhosts to /opt/homebrew/etc/nginx/sites-available and symlink them just like you would do in production. Have fun!${txtreset}"
