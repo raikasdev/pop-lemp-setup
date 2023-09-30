@@ -9,7 +9,7 @@
 
 It *might* work on Ubuntu, Debian, Mint or any other fork. No guarantees.
 
-Interested in similar approach on Mac? 👉 [macos-lemp-stack](https://github.com/digitoimistodude/macos-lemp-stack). \
+Interested in similar approach on Mac? 👉 [macos-lemp-setup](https://github.com/digitoimistodude/macos-lemp-setup). \
 Interested in similar approach on Windows? 👉 [Setting up a local server on Windows 10 for WordPress theme development (or any web development for that matter)](https://rolle.design/local-server-on-windows-10-for-wordpress-theme-development).
 
 ## Install local LEMP for Pop!_OS
