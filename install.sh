@@ -10,7 +10,7 @@ txtreset=$(tput sgr0)
 echo "${yellow}Getting dependencies.${txtreset}"
 echo "${yellow}Installing nginx.${txtreset}"
 sudo apt install nginx
-systemctl enable --now nginx
+sudo systemctl enable --now nginx
 curl -IL http://127.0.0.1:80
 echo "${boldgreen}nginx installed and running.${txtreset}"
 echo "${yellow}Setting up nginx.${txtreset}"
@@ -155,7 +155,7 @@ echo "${boldgreen}MailHog installed (run mailhog to start mail server).${txtrese
 
 echo "${yellow}Installing mkcert.${txtreset}"
 curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
-chmod +x mkcert-v*-linux-amd64
+sudo chmod +x mkcert-v*-linux-amd64
 sudo mv mkcert-v*-linux-amd64 /usr/local/bin/mkcert
 echo "${boldgreen}mkcert installed.${txtreset}"
 
