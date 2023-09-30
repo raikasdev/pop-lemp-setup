@@ -69,7 +69,7 @@ http {
         ##
         
         include /etc/nginx/sites-enabled/*;
-}" | sudo tee -a "/etc/nginx/nginx.conf"
+}" | sudo tee "/etc/nginx/nginx.conf"
 sudo mkdir -p /var/log/nginx
 sudo touch /var/log/nginx/access.log
 sudo chmod 777 /var/log/nginx/access.log
@@ -92,7 +92,7 @@ sudo echo "location ~ \.php\$ {
   fastcgi_param PHP_ADMIN_VALUE \"open_basedir=\$document_root/:/usr/lib/php/:/tmp/\";
 
   fastcgi_pass unix:/var/run/php/php-fpm.sock;
-}" | sudo tee -a "/etc/nginx/php7.conf"
+}" | sudo tee "/etc/nginx/php7.conf"
 sudo echo "# WordPress single site rules.
 # Designed to be included in any server {} block.
 # Upstream to abstract backend connection(s) for php
@@ -119,7 +119,7 @@ rewrite /wp-admin\$ \$scheme://\$host\$uri/ permanent;
 # Directives to send expires headers and turn off 404 error logging.
 location ~* ^.+\.(ogg|ogv|svg|svgz|eot|otf|woff|mp4|ttf|rss|atom|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf)\$ {
        access_log off; log_not_found off; expires max;
-}" | sudo tee -a "/etc/nginx/global/wordpress.conf"
+}" | sudo tee "/etc/nginx/global/wordpress.conf"
 sudo echo "server {
         listen 80 default_server;
         root /var/www;
@@ -127,7 +127,7 @@ sudo echo "server {
         server_name localhost;
         include php7.conf;
         include global/wordpress.conf;
-}" | sudo tee -a "/etc/nginx/sites-available/default"
+}" | sudo tee "/etc/nginx/sites-available/default"
 sudo echo "types {
   text/html                             html htm shtml;
   text/css                              css;
@@ -175,7 +175,7 @@ sudo echo "types {
   video/x-ms-wmv                        wmv;
   video/x-ms-asf                        asx asf;
   video/x-mng                           mng;
-}" | sudo tee -a "/etc/nginx/mime.types"
+}" | sudo tee "/etc/nginx/mime.types"
 sudo echo "fastcgi_param  QUERY_STRING       \$query_string;
 fastcgi_param  REQUEST_METHOD     \$request_method;
 fastcgi_param  CONTENT_TYPE       \$content_type;
@@ -199,7 +199,7 @@ fastcgi_param  SERVER_PORT        \$server_port;
 fastcgi_param  SERVER_NAME        \$server_name;
 
 # PHP only, required if PHP was built with --enable-force-cgi-redirect
-fastcgi_param  REDIRECT_STATUS    200;" | sudo tee -a "/etc/nginx/fastcgi_params"
+fastcgi_param  REDIRECT_STATUS    200;" | sudo tee "/etc/nginx/fastcgi_params"
 sudo ln -sfnv /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo chown -R $(whoami):www-data /var/www
 
@@ -209,6 +209,7 @@ sudo add-apt-repository --yes ppa:ondrej/php
 sudo apt update
 sudo apt install php7.4 php7.4-curl php7.4-redis php7.4-xml php7.4-fpm php7.4-igbinary php7.4-json php7.4-dev php-pear
 sudo systemctl enable --now php-fpm
+sudo sed -i -e "s/user = www-data/$USER/g" /etc/php/7.4/fpm/pool.d/www.conf
 echo "${boldgreen}PHP installed and running.${txtreset}"
 
 echo "${yellow}Installing MariaDB.${txtreset}"
