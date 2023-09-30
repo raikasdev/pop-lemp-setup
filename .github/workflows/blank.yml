@@ -38,6 +38,7 @@ jobs:
         run: |
           git clone https://github.com/raikasdev/dudestack
           sudo ln -s "$(realpath ./dudestack/bin/popos.sh)" /usr/local/bin/createproject
+          sudo chmod +x /usr/local/bin/createproject
       - name: Restart php7.4
         run: sudo systemctl status php7.4-fpm
       - name: Create project using dudestack
@@ -48,6 +49,7 @@ jobs:
         run: |
           git clone -b pop-os-support https://github.com/raikasdev/air-light
           sudo ln -s "$(realpath ./air-light/bin/newtheme-popos.sh)" /usr/local/bin/newtheme
+          sudo chmod +x /usr/local/bin/newtheme
       - name: Create theme using air-light
         run: echo -e "y\nairdev\nairdev" | newtheme
       - name: Curl project
