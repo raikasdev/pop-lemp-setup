@@ -89,7 +89,6 @@ sudo echo "location ~ \.php\$ {
   # fastcgi params
   fastcgi_param DOCUMENT_ROOT   \$realpath_root;
   fastcgi_param SCRIPT_FILENAME \$realpath_root$fastcgi_script_name;
-  fastcgi_param PHP_ADMIN_VALUE \"open_basedir=\$base/:/usr/lib/php/:/tmp/\";
   fastcgi_pass unix:/var/run/php/php-fpm.sock;
 }" | sudo tee -a "/etc/nginx/php7.conf"
 sudo echo "# WordPress single site rules.
