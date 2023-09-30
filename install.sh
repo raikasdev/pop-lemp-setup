@@ -233,6 +233,7 @@ echo "${yellow}Installing mkcert.${txtreset}"
 curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
 sudo chmod +x mkcert-v*-linux-amd64
 sudo mv mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+mkcert -install
 echo "${boldgreen}mkcert installed.${txtreset}"
 
 echo "${yellow}Restarting services....${txtreset}"
