@@ -30,5 +30,7 @@ jobs:
         run: DONT_SECURE_INSTALL_MYSQL=yes /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/raikasdev/pop-lemp-setup/master/install.sh)"
       - name: Curl
         run: curl http://localhost:80
+      - name: var www
+        run: ls -la /var/www
       - name: Error log
         run: cat /var/log/nginx/error.log
