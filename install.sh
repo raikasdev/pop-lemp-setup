@@ -202,14 +202,14 @@ fastcgi_param  SERVER_NAME        \$server_name;
 fastcgi_param  REDIRECT_STATUS    200;" | sudo tee "/etc/nginx/fastcgi_params"
 sudo ln -sfnv /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo chown -R $(whoami):www-data /var/www
-
+sudo chmod -R 777 /var/www
 echo "${yellow}Installing PHP.${txtreset}"
 sudo apt update
 sudo add-apt-repository --yes ppa:ondrej/php
 sudo apt update
 sudo apt install php7.4 php7.4-curl php7.4-redis php7.4-xml php7.4-fpm php7.4-igbinary php7.4-json php7.4-dev php-pear
 sudo systemctl enable --now php-fpm
-sudo sed -i -e "s/user = www-data/$USER/g" /etc/php/7.4/fpm/pool.d/www.conf
+sudo sed -i -e "s/user = www-data/$(whoami)/g" /etc/php/7.4/fpm/pool.d/www.conf
 echo "${boldgreen}PHP installed and running.${txtreset}"
 
 echo "${yellow}Installing MariaDB.${txtreset}"
