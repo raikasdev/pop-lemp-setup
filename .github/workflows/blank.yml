@@ -35,9 +35,7 @@ jobs:
           git clone https://github.com/raikasdev/dudestack
           sudo ln -s "$(realpath ./dudestack/bin/popos.sh)" /usr/local/bin/createproject
       - name: Restart php7.4
-        run: |
-          sudo systemctl restart php7.4-fpm
-          sudo systemctl status php7.4-fpm
+        run: sudo systemctl restart php7.4-fpm; sudo systemctl status php7.4-fpm
       - name: Create project using dudestack
         run: echo -e "airdev\n\ntestuser\ntestpassword\ntest@example.com\nn" | createproject
       - name: Curl project
