@@ -69,7 +69,7 @@ http {
         ##
         
         include /etc/nginx/sites-enabled/*;
-}" > "/etc/nginx/nginx.conf"
+}" | sudo tee -a "/etc/nginx/nginx.conf"
 sudo mkdir -p /var/log/nginx
 sudo touch /var/log/nginx/access.log
 sudo chmod 777 /var/log/nginx/access.log
@@ -91,7 +91,7 @@ sudo echo "location ~ \.php\$ {
   fastcgi_param SCRIPT_FILENAME \$realpath_root$fastcgi_script_name;
   fastcgi_param PHP_ADMIN_VALUE \"open_basedir=\$base/:/usr/lib/php/:/tmp/\";
   fastcgi_pass unix:/var/run/php/php-fpm.sock;
-}" > "/etc/nginx/php7.conf"
+}" | sudo tee -a "/etc/nginx/php7.conf"
 sudo echo "# WordPress single site rules.
 # Designed to be included in any server {} block.
 # Upstream to abstract backend connection(s) for php
@@ -118,7 +118,7 @@ rewrite /wp-admin\$ \$scheme://\$host\$uri/ permanent;
 # Directives to send expires headers and turn off 404 error logging.
 location ~* ^.+\.(ogg|ogv|svg|svgz|eot|otf|woff|mp4|ttf|rss|atom|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf)\$ {
        access_log off; log_not_found off; expires max;
-}" > "/etc/nginx/global/wordpress.conf"
+}" | sudo tee -a "/etc/nginx/global/wordpress.conf"
 sudo echo "server {
         listen 80 default_server;
         root /var/www;
@@ -126,7 +126,7 @@ sudo echo "server {
         server_name localhost;
         include php7.conf;
         include global/wordpress.conf;
-}" > "/etc/nginx/sites-available/default"
+}" | sudo tee -a "/etc/nginx/sites-available/default"
 sudo ln -sfnv /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo chown -R $(whoami):www-data /var/www
 
