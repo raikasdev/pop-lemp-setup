@@ -211,7 +211,7 @@ sudo add-apt-repository --yes ppa:ondrej/php
 sudo apt update
 sudo apt install php7.4 php7.4-curl php7.4-redis php7.4-xml php7.4-fpm php7.4-igbinary php7.4-json php7.4-dev php-pear
 sudo systemctl enable --now php-fpm
-sudo sed -i -e "s/user = www-data/$(whoami)/g" /etc/php/7.4/fpm/pool.d/www.conf
+sudo sed -i -e "s/user = www-data/user = $(whoami)/g" /etc/php/7.4/fpm/pool.d/www.conf
 echo "${boldgreen}PHP installed and running.${txtreset}"
 
 echo "${yellow}Installing MariaDB.${txtreset}"
