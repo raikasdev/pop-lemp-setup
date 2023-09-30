@@ -31,4 +31,4 @@ jobs:
       - name: Curl
         run: curl http://localhost:80
       - name: Error log
-        run: echo /var/log/nginx/error.log
+        run: cat /var/log/nginx/error.log
