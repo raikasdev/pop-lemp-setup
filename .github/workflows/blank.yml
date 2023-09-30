@@ -32,7 +32,7 @@ jobs:
         run: curl -f http://localhost:80
       - name: Setup MySQL
         run: |
-          echo "UPDATE mysql.user SET Password=PASSWORD('root') WHERE User='root';DELETE FROM mysql.user WHERE User='';\nDELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');\nDROP DATABASE IF EXISTS test;\nDELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';\nFLUSH PRIVILEGES;" > setup.sql
+          echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';\nFLUSH PRIVILEGES;" > setup.sql
           sudo mysql < "setup.sql"
       - name: Install Dudestack # Using raikasdev/dudestack for Pop!_OS support
         run: |
@@ -44,3 +44,13 @@ jobs:
         run: echo -e "airdev\nroot\ntestuser\ntestpassword\ntest@example.com\nn" | createproject
       - name: Curl project
         run: curl -f https://airdev.test
+      - name: Install air-light # Using raikasdev/air-light for Pop!_OS support
+        run: |
+          git clone -b pop-os-support https://github.com/raikasdev/air-light
+          sudo ln -s "$(realpath ./air-light/bin/newtheme-popos.sh)" /usr/local/bin/newtheme
+      - name: Create theme using air-light
+        run: echo -e "y\nairdev\nairdev" | newtheme
+      - name: Curl project
+        run: curl -f https://airdev.test
+      - name: Curl project theme style.css
+        run: curl -f https://airdev.test/content/themes/airdev/style.css
