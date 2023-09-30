@@ -30,6 +30,10 @@ jobs:
         run: DONT_SECURE_INSTALL_MYSQL=yes /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/raikasdev/pop-lemp-setup/master/install.sh)"
       - name: Curl
         run: curl -f http://localhost:80
+      - name: Setup MySQL
+        run: |
+          echo "UPDATE mysql.user SET Password=PASSWORD('root') WHERE User='root';DELETE FROM mysql.user WHERE User='';\nDELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');\nDROP DATABASE IF EXISTS test;\nDELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';\nFLUSH PRIVILEGES;" > setup.sql
+          sudo mysql < "setup.sql"
       - name: Install Dudestack # Using raikasdev/dudestack for Pop!_OS support
         run: |
           git clone https://github.com/raikasdev/dudestack
@@ -37,6 +41,6 @@ jobs:
       - name: Restart php7.4
         run: sudo systemctl status php7.4-fpm
       - name: Create project using dudestack
-        run: echo -e "airdev\n\ntestuser\ntestpassword\ntest@example.com\nn" | createproject
+        run: echo -e "airdev\nroot\ntestuser\ntestpassword\ntest@example.com\nn" | createproject
       - name: Curl project
         run: curl -f https://airdev.test
